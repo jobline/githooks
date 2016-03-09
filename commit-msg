@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# [SPELLING] --> Check for spelling errors
+#
+ASPELL=$(which aspell)
+
+if [ $? -ne 0 ]; then
+  echo "Aspell not installed - unable to check spelling" >&2
+  exit
+else
+  WORDS=$($ASPELL list < "$1")
+fi
+
+if [ -n "$WORDS" ]; then
+  echo "[SPELLING] --> 🚫 Spelling errors found in commit message: " $WORDS >&2
+  exit 1
+fi
+
+exec < /dev/tty
+./.git/hooks/validate_commit.rb $1

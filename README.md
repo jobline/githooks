@@ -14,14 +14,14 @@ Current checks:
 ## Pre-requisite
 
 ```
-▶ brew install aspell awk
+▶ brew install aspell
 ▶ npm install -g eslint eslint-config-airbnb eslint-plugin-react
 ```
 
-## Result
+## What the result will look like
 
 ```
-[WHITESPACE] --> 👍 LGTM
+[WHITESPACE] --> 👍 LGTM <-- "Looks Good To Me"
 [ESLINT] --> 👍 LGTM
 [GIT_COMMIT_MESSAGE] --> 🚫 Malformed git commit message. Re-edit? [y/n]
 

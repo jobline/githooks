@@ -1,0 +1,51 @@
+#!/bin/sh
+
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+	against=HEAD
+else
+	# Magic Initial commit
+	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+
+if ! git diff-index --check --cached $against
+then
+	echo "[Whitespace] --> ✋ Can't commit! Check your whitespaces!!!"
+	exit 1
+fi
+
+# ESLint
+# Make sure you have
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep ".jsx\{0,1\}$")
+
+if [[ "$STAGED_FILES" = "" ]]; then
+  exit 0
+fi
+
+PASS=true
+
+# [ESLINT] --> JavaScript Linter
+#
+which eslint &> /dev/null
+if [[ "$?" == 1 ]]; then
+  echo "⚠️ Please install ESlint and friends globally first via: \"npm install -g eslint eslint-config-airbnb eslint-plugin-react\""
+  exit 1
+fi
+
+for FILE in $STAGED_FILES
+do
+  eslint "$FILE"
+
+  if [[ "$?" == 1 ]]; then
+    PASS=false
+  fi
+done
+
+if ! $PASS; then
+  echo "[ESLINT] --> ✋ Can't commit! Failed ESLint!!!"
+  exit 1
+else
+  echo "[ESLINT] --> 👍 Commit approved."
+fi
+
+exit $?

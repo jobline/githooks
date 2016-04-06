@@ -57,7 +57,18 @@ fi
 
 
 
-# [ESLINT] --> JavaScript Linter
+
+# [RUBOCOP] --> Ruby style
 #
+FAILS=`bundle exec rubocop | grep 'no offenses detected' -o`
+COUNTS=`bundle exec rubocop | grep -e '\d* offenses detected' -o | awk '{print $1}'`
+
+if [ "$FAILS" == "no" ]; then
+    echo "[RUBOCOP] --> 👍 LGTM"
+    exit 0
+else
+    echo "[RUBOCOP] --> 🚫 You've $COUNTS offenses!!!"
+    exit 1
+fi
 
 exit $?

@@ -1,5 +1,7 @@
 # Git Hooks
 
+Prevent code from gradually degrading in quality.
+
 ## Pre-Commit
 
 You can bypass the hook using `git commit --no-verify`

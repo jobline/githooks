@@ -60,8 +60,8 @@ fi
 
 # [RUBOCOP] --> Ruby style
 #
-FAILS=`bundle exec rubocop | grep 'no offenses detected' -o`
-COUNTS=`bundle exec rubocop | grep -e '\d* offenses detected' -o | awk '{print $1}'`
+FAILS=`bundle exec rubocop app lib test | grep 'no offenses detected' -o | awk '{print $1}'`
+COUNTS=`bundle exec rubocop app lib test | grep -e '\d* offenses detected' -o | awk '{print $1}'`
 
 if [ "$FAILS" == "no" ]; then
     echo "[RUBOCOP] --> 👍 LGTM"
